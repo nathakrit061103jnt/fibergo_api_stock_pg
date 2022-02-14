@@ -32,7 +32,7 @@ func InitDatabase() {
 	dsn := fmt.Sprintf("host=%s user=%s dbname=%s port=%s password=%s",
 		PSQL_HOST, PSQL_USER, PSQL_DB_NAME, PSQL_PORT, PSQL_PASS)
 
-	log.Print("Connecting to PostgreSQL DB...")
+	log.Print("Connecting to PostgreSQL DB....")
 	database.DBConn, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info), SkipDefaultTransaction: true,
 	})
