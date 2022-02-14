@@ -16,18 +16,18 @@ func InitDatabase() {
 	var err error
 
 	// ========== producttion mode =================
-	// PSQL_HOST := Config("PSQL_HOST")
-	// PSQL_DB_NAME := Config("PSQL_DB_NAME")
-	// PSQL_USER := Config("PSQL_USER")
-	// PSQL_PASS := Config("PSQL_PASS")
-	// PSQL_PORT := Config("PSQL_PORT")
+	PSQL_HOST := Config("PSQL_HOST")
+	PSQL_DB_NAME := Config("PSQL_DB_NAME")
+	PSQL_USER := Config("PSQL_USER")
+	PSQL_PASS := Config("PSQL_PASS")
+	PSQL_PORT := Config("PSQL_PORT")
 
 	// ================== dev mode =======================
-	PSQL_HOST := Config("PSQL_HOST_DEV")
-	PSQL_DB_NAME := Config("PSQL_DB_NAME_DEV")
-	PSQL_USER := Config("PSQL_USER_DEV")
-	PSQL_PASS := Config("PSQL_PASS_DEV")
-	PSQL_PORT := Config("PSQL_PORT_DEV")
+	// PSQL_HOST := Config("PSQL_HOST_DEV")
+	// PSQL_DB_NAME := Config("PSQL_DB_NAME_DEV")
+	// PSQL_USER := Config("PSQL_USER_DEV")
+	// PSQL_PASS := Config("PSQL_PASS_DEV")
+	// PSQL_PORT := Config("PSQL_PORT_DEV")
 
 	dsn := fmt.Sprintf("host=%s user=%s dbname=%s port=%s password=%s",
 		PSQL_HOST, PSQL_USER, PSQL_DB_NAME, PSQL_PORT, PSQL_PASS)
