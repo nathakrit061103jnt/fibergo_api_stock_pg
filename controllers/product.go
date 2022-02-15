@@ -164,6 +164,7 @@ func UpdateProduct(c *fiber.Ctx) error {
 
 	product.P_Image = newFileName
 	product.ID = productById.ID
+	product.Id = productById.Id
 	err = db.Model(&product).Where("id = ?", id).Updates(&product).Error
 	if err != nil {
 		// error handling...
