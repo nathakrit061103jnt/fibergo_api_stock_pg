@@ -13,9 +13,17 @@ func SetupRoutes(app *fiber.App) {
 	app.Static("/", "./images")
 
 	// group  route
-	api := app.Group("/api/v1")
-	product := api.Group("/products", configs.ConfigAuth)
-	auth := app.Group("/auth") // auth
+	apiV1 := app.Group("/api/v1")
+	auth := apiV1.Group("/auth") // auth
+	product := apiV1.Group("/products", configs.ConfigAuth)
+	user := apiV1.Group("/user", configs.ConfigAuth)
+
+	// auth route
+	auth.Post("/login", controllers.Login)
+	auth.Post("/register", controllers.Register)
+
+	// user route
+	user.Get("/", controllers.DecodeUser)
 
 	// Product route
 	product.Get("/", controllers.GetProductsAll)
@@ -23,9 +31,5 @@ func SetupRoutes(app *fiber.App) {
 	product.Post("/", controllers.CreateProduct)
 	product.Put("/:id", controllers.UpdateProduct)
 	product.Delete("/:id", controllers.DeleteProduct)
-
-	// auth route
-	auth.Post("/login", controllers.Login)
-	auth.Post("/register", controllers.Register)
 
 }

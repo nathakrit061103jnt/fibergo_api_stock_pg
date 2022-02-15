@@ -74,7 +74,8 @@ func Login(c *fiber.Ctx) error {
 
 	// Create the Claims
 	claims := jwt.MapClaims{
-		"u_email": user.U_password,
+		"u_id":    user.ID,
+		"u_email": user.U_email,
 		"admin":   false,
 		"exp":     time.Now().Add(time.Hour * 24).Unix(),
 	}
@@ -94,6 +95,7 @@ func Login(c *fiber.Ctx) error {
 	response := fiber.Map{"result": fiber.Map{
 		"token":   t,
 		"u_email": user.U_email,
+		"u_id":    user.ID,
 	}}
 
 	return c.JSON(response)
@@ -111,4 +113,17 @@ func hashPassword(password string) (string, error) {
 		return "", fiber.NewError(fiber.StatusUnprocessableEntity, err.Error())
 	}
 	return string(bytes), err
+}
+
+func DecodeUser(c *fiber.Ctx) error {
+
+	user := c.Locals("user").(*jwt.Token)
+	claims := user.Claims.(jwt.MapClaims)
+	userMap := fiber.Map{"user": fiber.Map{
+		"u_id":    claims["u_id"],
+		"u_email": claims["u_email"],
+	}}
+
+	return c.JSON(userMap)
+
 }
