@@ -16,7 +16,7 @@ func SetupRoutes(app *fiber.App) {
 	apiV1 := app.Group("/api/v1")
 	auth := apiV1.Group("/auth") // auth
 	product := apiV1.Group("/products", configs.ConfigAuth)
-	user := apiV1.Group("/user", configs.ConfigAuth)
+	user := apiV1.Group("/users", configs.ConfigAuth)
 
 	// auth route
 	auth.Post("/login", controllers.Login)
