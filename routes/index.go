@@ -9,7 +9,7 @@ import (
 
 func SetupRoutes(app *fiber.App) {
 
-	app.Get("/*", configs.ConfigAuth)
+	// app.Get("/*", configs.ConfigAuth)
 	app.Static("/", "./images")
 
 	// group  route
