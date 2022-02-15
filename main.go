@@ -19,7 +19,7 @@ func main() {
 	port := configs.Config("PORT")
 
 	//config for customization
-	app.Use(cors.New(configs.ConfigDefault))
+	app.Use(cors.New())
 	app.Use(logger.New())
 
 	configs.InitDatabase()
