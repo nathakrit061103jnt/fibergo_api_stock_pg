@@ -13,7 +13,7 @@ func main() {
 	app := fiber.New(configs.AppConfig)
 
 	app.Get("/hello", func(c *fiber.Ctx) error {
-		return c.SendString("hello ,hello word ")
+		return c.SendString("hello ,hello word")
 	})
 
 	port := configs.Config("PORT")
