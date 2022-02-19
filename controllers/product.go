@@ -153,16 +153,22 @@ func UpdateProduct(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "Product not found"})
 	}
 
-	file, err := c.FormFile("p_image")
-	if err != nil {
-		log.Print(err)
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": err.Error()})
-	}
-	removePath := "./images/" + productById.P_Image
-	uuid := guuid.New().String()
-	newFileName := uuid + file.Filename
+	file, errImgForm := c.FormFile("p_image")
 
-	product.P_Image = newFileName
+	newFileName := ""
+	if errImgForm != nil {
+		log.Print(err)
+		product.P_Image = productById.P_Image
+		// return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{"message": err.Error()})
+	} else {
+		uuid := guuid.New().String()
+		newFileName = uuid + file.Filename
+		product.P_Image = newFileName
+		uploadImage(file, newFileName, c)
+
+	}
+
+	// product.P_Image = newFileName
 	product.ID = productById.ID
 	product.Id = productById.Id
 	err = db.Model(&product).Where("id = ?", id).Updates(&product).Error
@@ -172,8 +178,10 @@ func UpdateProduct(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusUnprocessableEntity).JSON(fiber.Map{"message": err.Error()})
 	}
 
-	uploadImage(file, newFileName, c)
-	removeImage(removePath, c)
+	if errImgForm == nil {
+		removePath := "./images/" + productById.P_Image
+		removeImage(removePath, c)
+	}
 
 	response := fiber.Map{
 		"result":  product,
