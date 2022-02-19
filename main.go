@@ -11,7 +11,6 @@ import (
 
 func main() {
 	app := fiber.New(configs.AppConfig)
-
 	app.Get("/hello", func(c *fiber.Ctx) error {
 		return c.SendString("hello ,hello word")
 	})
@@ -19,7 +18,7 @@ func main() {
 	port := configs.Config("PORT")
 
 	//config for customization
-	app.Use(cors.New())
+	app.Use(cors.New(configs.CorsConfigDefault))
 	app.Use(logger.New())
 
 	configs.InitDatabase()
